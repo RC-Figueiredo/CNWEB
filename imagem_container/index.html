@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>dockerhub estudos</title>
+  <style>
+    :root {
+      /* Cores institucionais CPS / ETEC */
+      --cps-red: #B20000;
+      --cps-blue: #005C6D;
+      --cps-blue-light: #00C1CF;
+      --text-dark: #333333;
+      --bg-light: #F8F8F8;
+      --bg-white: #FFFFFF;
+      --border-light: #E6E6E6;
+      --radius: 12px;
+      --max-width: 900px;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+      padding: 40px 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    header {
+      background: var(--cps-red);
+      color: #fff;
+      padding: 24px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    header .subtitle {
+      margin-top: 4px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    main {
+      padding: 28px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .meta .field {
+      background: #f0f0f0;
+      border: 1px dashed var(--border-light);
+      padding: 12px;
+      border-radius: var(--radius);
+      min-width: 160px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-dark);
+      opacity: 0.8;
+    }
+
+    .field .value {
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    .questions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+
+    .question-title {
+      font-weight: bold;
+      margin: 0 0 8px 0;
+      color: var(--cps-blue);
+    }
+
+    .answer {
+      min-height: 48px;
+      padding: 10px;
+      background: #f0f8ff;
+      border-radius: 6px;
+      color: var(--text-dark);
+      font-size: 14px;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-dark);
+      opacity: 0.85;
+    }
+
+    @media (min-width: 720px) {
+      .questions {
+        grid-template-columns: 1fr 1fr;
+      }
+      .questions .card.full {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="app">
+    <header>
+      <h1>Dockerhub E práticas a parte</h1>
+      <div class="subtitle">Curso Técnico — ETEC / CPS</div>
+    </header>
+
+    <main>
+      <section class="meta">
+        <div class="field">
+          <label>Aluno</label>
+          <div class="value" id="studentName">&nbsp;</div>
+        </div>
+        <div class="field">
+          <label>Sala</label>
+          <div class="value" id="sala">&nbsp;</div>
+        </div>
+        <div class="field">
+          <label>Turma</label>
+          <div class="value" id="turma">&nbsp;</div>
+        </div>
+        <div class="field">
+          <label>Usuário DockerHub</label>
+          <div class="value" id="dockerUser">&nbsp;</div>
+        </div>
+        <div class="field">
+          <label>Data</label>
+          <div class="value" id="date">&nbsp;</div>
+        </div>
+      </section>
+
+      <section class="questions">
+        <div class="card full">
+          <p style="text-align:center; margin:0; font-size:15px; font-weight:700">
+            Responda às perguntas abaixo — preencha pelo código-fonte
+          </p>
+        </div>
+
+        <div class="card">
+          <p class="question-title">1 – Qual foi o assunto da Aula de Hoje?</p>
+          <div class="answer" id="answer1"></div>
+        </div>
+
+        <div class="card">
+          <p class="question-title">2 – O que faz o comando <code>docker login</code>?</p>
+          <div class="answer" id="answer2"></div>
+        </div>
+
+        <div class="card">
+          <p class="question-title">3 – O que faz o comando <code>docker push</code>?</p>
+          <div class="answer" id="answer3"></div>
+        </div>
+
+        <div class="card">
+          <p class="question-title">4 – Como versionar uma imagem Docker corretamente no Docker Hub?</p>
+          <div class="answer" id="answer4"></div>
+        </div>
+
+        <div class="card">
+          <p class="question-title">5 – Qual a diferença entre uma tag estável e uma tag volátil (como <code>alpine-&lt;hash&gt;</code>)?</p>
+          <div class="answer" id="answer5"></div>
+        </div>
+      </section>
+
+      <div class="footer-note">
+        Observação: todos os campos são preenchidos via código (veja no script abaixo). Edite as variáveis <code>student</code> e <code>answers</code>.
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const student = {
+      name: "Renato de Costa Figueiredo",
+      sala: "05",
+      turma: "Turma B infonet",
+      dockerUser: "RC-Figueiredo"
+    };
+
+    const answers = [
+      "O assunto da aula de hoje foi sobre Docker Registry e Versionamento de imagens", // resposta 1
+      "O comando Docker Login fa zo login do usuario com o Docker Hub", // resposta 2
+      "Envia o Container criado para o Docker Hub", // resposta 3
+      "Colocando primeiramente o nome do usuario Docker Hub e depois o nome da imagem que quer enviar e a tag.EX usuario/nginx:latest", // resposta 4
+      "Uma tag estável representa uma versão fixa e imutavél de um projeto,ja uma tag volátil pode mudar a cada build,ela pode ter um valor novo"  // resposta 5
+    ];
+
+    document.getElementById('studentName').textContent = student.name || '--- preencha student.name ---';
+    document.getElementById('sala').textContent = student.sala || '--- preencha student.sala ---';
+    document.getElementById('turma').textContent = student.turma || '--- preencha student.turma ---';
+    document.getElementById('dockerUser').textContent = student.dockerUser || '--- preencha student.dockerUser ---';
+    document.getElementById('date').textContent = new Date().toLocaleDateString('pt-BR');
+
+    for (let i = 0; i < 5; i++) {
+      const el = document.getElementById('answer' + (i + 1));
+      el.textContent = answers[i] || (`--- preencha answers[${i}] no código-fonte ---`);
+    }
+  </script>
+</body>
+</html>
