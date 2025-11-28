@@ -1,0 +1,9 @@
+ services:
+      servidor_1:
+        build: ./servidor_1
+        ports:
+          - "8081:80"
+      servidor_2:
+        build: ./servidor_2
+        ports:
+          - "8082:80"
